@@ -15,16 +15,17 @@ class Singletone
 
 		}
 	private:
-		Singletone(Singletone const &);
-		Singletone& operator=(Singletone const &);
+		Singletone(Singletone const &); 
+		Singletone& operator=(Singletone const &); // Запрет на неявное создание объектов класса.
 		Singletone() {};
 
 };
 
 int main()
 {
-	Singletone* Ex1 = Singletone::create();
-	Singletone* Ex2 = Singletone::create();
+	Singletone* Ex1 = Singletone::create(); // Является объектом класса
+	Singletone* Ex2 = Singletone::create(); // Получает нулевой указатель
 	
 	return(0);
 }
+// Майерса ещё не чекал, до этой идеи сами дошли.
