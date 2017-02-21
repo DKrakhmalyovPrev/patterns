@@ -1,0 +1,30 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream> 
+#include <stdio.h>
+#include <cstdlib>
+using namespace std;
+
+class Singletone
+{
+	public:
+		static Singletone* create() 
+		{
+			static int i = 0;
+			if (i >= 1) { return NULL; }
+			else { i++; return new Singletone; }
+
+		}
+	private:
+		Singletone(Singletone const &);
+		Singletone& operator=(Singletone const &);
+		Singletone() {};
+
+};
+
+int main()
+{
+	Singletone* Ex1 = Singletone::create();
+	Singletone* Ex2 = Singletone::create();
+	
+	return(0);
+}
