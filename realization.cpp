@@ -23,7 +23,7 @@ Character::Character(string n , short a , short d, short l):
 		
 	}
 	
-void Character::incPar(string& s, int n)
+void Character::incPar(string s, int n)
 	{
 		int a = strcomp(s, "attack");
 		int b = strcomp(s, "defence");
@@ -46,19 +46,42 @@ int Character::getPar(int n) const
 		if (n == 3)
 			return(luck);
 	}
+
+string Character::getName() const
+{
+	return name;
+}
 	
+void Character::printPar() const
+{
+	cout << "Attack:" << attack << " Defence:" << defence << " Luck:" << luck << endl;
+}
 
 
 
 bool Fight(const Character& player, const Character& enemy)
 {
+	string s;
+	cout << player.getName() << " VS " << enemy.getName() << endl;
 	int a1 = player.getPar(1), a2 = enemy.getPar(1);
 	int d1 = player.getPar(1), d2 = enemy.getPar(1);
 	int l1 = player.getPar(1), l2 = enemy.getPar(1);
+	cout << "Now your scills are: ";
+	player.printPar();
+	cout << "Your opponent has: ";
+	enemy.printPar();
 	while ((d1 > 0) && (d2 > 0))
 	{
-		d2 -= a1*l1 / 100;
+		cout << "You can attack or defence. Please choose your move" << endl;
+		cin >> s;
+		if (strcomp(s, "attack") >= strcomp(s, "defence"))
+			d2 -= a1*l1 / 100;
+		else
+			d1 += d1*l1/100;
+		cout << "Your enemy attack you by " << a2*l2 / 100 << " points" << endl;
 		d1 -= a2*l2 / 100;
+		cout << "At the end of turn you have " << d1 << " health points" << endl;
+		cout << "Your enemy has " << d2 << " health points" << endl;
 	}
 	if (d2 <= 0)
 		return(1);
@@ -72,8 +95,15 @@ bool Fight(const Character& player, const Character& enemy)
 int game()
 {
 	Character player;
+	Character enemy;
 	string s;
-	cout << "Welcome to arena.\n Do you want to create your character?";
+	cout << "Hello. Please select game level:" << endl;
+	cin >> s;
+	if (strcomp(s, "hard") > strcomp(s, "easy"))
+		enemy = Character("Enemy", 20, 20, 40);
+	else
+		enemy = Character("Enemy", 5, 5, 10);
+	cout << "Welcome to arena.\n Do you want to create your character?" << endl;
 	cin>>s;
 	if (strcomp(s, "yes") > strcomp(s, "no"))
 	{
@@ -96,7 +126,6 @@ int game()
 	for (int i = 1;i < 11;i++)
 	{
 		cout << "Welcome to the " << i << " stage of the tournament." << endl;
-		Character enemy("Enemy", 5 * i, 5 * i, 10 * i);
 		bool result = Fight(player, enemy);
 		if (result == 0)
 		{
@@ -116,6 +145,9 @@ int game()
 			}
 			player.incPar(s, 20);
 		}
+		enemy.incPar("attack", 10);
+		enemy.incPar("defence", 10);
+		enemy.incPar("luck", 5);
 	}
 
 }

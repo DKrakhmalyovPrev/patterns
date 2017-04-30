@@ -17,9 +17,11 @@ int strcomp(string& a, const string& b);
 class Character
 {
 public:
-	void incPar(string& s, int n);
+	void incPar(string s, int n);
 	int getPar(int n) const;
+	string getName() const;
 	Character(string n = "Hero", short a = 34, short d = 33, short l = 32);
+	void printPar() const;
 private:
 	string name;
 	short attack;
